@@ -1,0 +1,20 @@
+**************** LOGIN ****************
+
+mysql -uadmin_farm -p admin_farm
+
+**************** CREATE ****************
+
+CREATE TABLE players (
+player_id INT UNSIGNED AUTO_INCREMENT,
+fb_id VARCHAR(20),
+name VARCHAR(30),
+level INT UNSIGNED,
+xp INT UNSIGNED,
+coins INT UNSIGNED,
+farm_size INT UNSIGNED,
+modified DATETIME,
+objects TEXT,
+stored_objects TEXT,
+gift_receivers TEXT,
+CONSTRAINT pk_user PRIMARY KEY (player_id)
+);

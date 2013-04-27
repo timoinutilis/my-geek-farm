@@ -1,0 +1,6 @@
+Enter "farm" to see what you have on your farm. At the beginning you should have two plants already. As they show the IDs 1 and 2 you have to type "collect 1" and "collect 2" to harvest them.
+Enter "farm" again and you will see that after harvesting you have unplowed plots. Before you can seed again on a plot, you have to plow it by entering "plow 1" (or another ID). Do also a "plow 2"! To be able to seed even more, you can create more plots by entering "plow new".
+Then enter "shop" to see what you can buy (there will be more when you reach higher levels). Buy wheat and seed it on your first plot by entering "buy 100 1". 100 is the ID of wheat in the shop, 1 should be the ID of a plot. Buy seeds for all your plots!
+Enter "player" to see information about you, e.g. how much money you have. Let the plants grow and come back after the time shown by "farm". Then type "collect 1" and repeat it with the IDs of the other plots, this way you will earn some money.
+Everything in the shop which is not a seed, doesn't need plots. It can be bought with the ID from the shop only, e.g. "buy 200" for an onion tree.
+Enter "help" to see what else you can do!
