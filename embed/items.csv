@@ -1,52 +1,60 @@
-id,category,name,price,xp,level,collect,time,size,shop,gift
-1,Plots,Empty Plot,1,1,1,0,0,2,0,0
-50,Money,10 Coins,0,0,1,10,0,0,0,1
-100,Seeds,Wheat,4,1,1,10,3,2,1,0
-101,Seeds,Barley,5,1,1,15,8,2,1,0
-102,Seeds,Hops,5,1,2,20,22,2,1,0
-103,Seeds,Popcorn,10,2,3,20,3,2,1,0
-104,Seeds,Musli,10,2,3,30,8,2,1,0
-105,Seeds,Butter Peanuts,10,2,4,40,22,2,1,0
-106,Seeds,Raisins,20,3,5,40,3,2,1,0
-107,Seeds,Chips,20,3,5,60,8,2,1,0
-108,Seeds,Pizza Margherita,20,3,6,80,22,2,1,0
-109,Seeds,Pizza Quattro Formaggi,40,4,7,80,3,2,1,0
-110,Seeds,Pizza Prosciutto,40,4,7,120,8,2,1,0
-111,Seeds,Super Supreme Pizza,40,4,8,160,22,2,1,0
-112,Seeds,Sushi,80,5,9,160,3,2,1,0
-113,Seeds,Spring Rolls,80,5,9,240,8,2,1,0
-114,Seeds,China Noodles,80,5,10,320,22,2,1,0
-150,Seeds,Silly Wheat,0,1,1,5,3,2,0,1
-151,Seeds,Silly Barley,0,1,1,8,3,2,0,1
-152,Seeds,Silly Popcorn,0,2,3,10,3,2,0,1
-153,Seeds,Silly Raisins,0,3,5,20,3,2,0,1
-154,Seeds,Pizza Silly Formaggi,0,4,7,40,3,2,0,1
-155,Seeds,Silly Sushi,0,5,9,80,3,2,0,1
-200,Trees,Onion Tree,100,6,1,20,10,3,1,0
-201,Trees,Cheese Tree,100,6,2,30,22,3,1,0
-202,Trees,Garlic Tree,100,6,3,40,70,3,1,0
-203,Trees,Croquette Tree,200,8,4,40,10,3,1,0
-204,Trees,Cucumber Tree,200,8,5,60,22,3,1,0
-205,Trees,Rissole Tree,200,8,6,80,70,3,1,0
-206,Trees,Pumpkin Tree,400,10,7,80,10,3,1,0
-207,Trees,Hamburger Tree,400,10,8,120,22,3,1,0
-208,Trees,Calamary Tree,400,10,9,160,70,3,1,0
-300,Animals,Burger Chicken,40,4,1,160,94,1,1,0
-301,Animals,Chorizo Animal,80,5,3,320,94,2,1,0
-302,Animals,Doner Animal,160,7,6,640,94,3,1,0
-303,Animals,Steak Animal,320,9,10,1280,94,4,1,0
-304,Animals,Unicorn,640,12,12,2560,142,4,1,0
-350,Animals,Silly Burger Chicken,0,4,2,80,94,1,0,1
-351,Animals,Silly Doner Animal,0,7,6,320,94,3,0,1
-500,Decorations,Electronic Goldfish Bowl,30,6,1,0,0,1,1,0
-501,Decorations,USB Rocket Launcher,30,6,1,0,0,1,1,0
-502,Decorations,Solar Powered Lamp,60,8,2,0,0,2,1,0
-503,Decorations,R2D2 Trash Can,120,10,3,0,0,2,1,0
-504,Decorations,Quadcopter Drone,240,12,4,0,0,2,1,0
-550,Decorations,Pink Blinking Plastic Heart,0,5,4,0,0,1,0,1
-551,Decorations,Hot Dog Telephone,0,5,8,0,0,1,0,1
-552,Decorations,RC Solar System,0,5,10,0,0,1,0,1
-600,Extensions,Farm Size 30,800,0,1,0,0,30,1,0
-601,Extensions,Farm Size 45,1600,0,1,0,0,45,1,0
-602,Extensions,Farm Size 68,3200,0,1,0,0,68,1,0
-603,Extensions,Farm Size 102,6400,0,1,0,0,102,1,0
+id,category,name,price,xp,level,collect,time,size,data,shop,gift
+1,Plots,Empty Plot,1,1,1,0,0,2,0,0,0
+50,Money,10 Coins,0,0,1,10,0,0,0,0,1
+100,Seeds,Wheat,4,1,1,10,3,2,0,1,0
+101,Seeds,Barley,5,1,1,15,8,2,0,1,0
+102,Seeds,Hops,5,1,2,20,22,2,0,1,0
+103,Seeds,Popcorn,10,2,3,20,3,2,0,1,0
+104,Seeds,Musli,10,2,3,30,8,2,0,1,0
+105,Seeds,Butter Peanuts,10,2,4,40,22,2,0,1,0
+106,Seeds,Raisins,20,3,5,40,3,2,0,1,0
+107,Seeds,Chips,20,3,5,60,8,2,0,1,0
+108,Seeds,Pizza Margherita,20,3,6,80,22,2,0,1,0
+109,Seeds,Pizza Quattro Formaggi,40,4,7,80,3,2,0,1,0
+110,Seeds,Pizza Prosciutto,40,4,7,120,8,2,0,1,0
+111,Seeds,Super Supreme Pizza,40,4,8,160,22,2,0,1,0
+112,Seeds,Sushi,80,5,9,160,3,2,0,1,0
+113,Seeds,Spring Rolls,80,5,9,240,8,2,0,1,0
+114,Seeds,China Noodles,80,5,10,320,22,2,0,1,0
+150,Seeds,Silly Wheat,0,1,1,5,3,2,0,0,1
+151,Seeds,Silly Barley,0,1,1,8,3,2,0,0,1
+152,Seeds,Silly Popcorn,0,2,3,10,3,2,0,0,1
+153,Seeds,Silly Raisins,0,3,5,20,3,2,0,0,1
+154,Seeds,Pizza Silly Formaggi,0,4,7,40,3,2,0,0,1
+155,Seeds,Silly Sushi,0,5,9,80,3,2,0,0,1
+200,Trees,Onion Tree,100,6,1,20,10,3,0,1,0
+201,Trees,Cheese Tree,100,6,2,30,22,3,0,1,0
+202,Trees,Garlic Tree,100,6,3,40,70,3,0,1,0
+203,Trees,Croquette Tree,200,8,4,40,10,3,0,1,0
+204,Trees,Cucumber Tree,200,8,5,60,22,3,0,1,0
+205,Trees,Rissole Tree,200,8,6,80,70,3,0,1,0
+206,Trees,Pumpkin Tree,400,10,7,80,10,3,0,1,0
+207,Trees,Hamburger Tree,400,10,8,120,22,3,0,1,0
+208,Trees,Calamary Tree,400,10,9,160,70,3,0,1,0
+300,Animals,Burger Chicken,40,4,1,160,94,1,0,1,0
+301,Animals,Chorizo Animal,80,5,3,320,94,2,0,1,0
+302,Animals,Doner Animal,160,7,6,640,94,3,0,1,0
+303,Animals,Steak Animal,320,9,10,1280,94,4,0,1,0
+304,Animals,Unicorn,640,12,12,2560,142,4,0,1,0
+350,Animals,Silly Burger Chicken,0,4,2,80,94,1,0,0,1
+351,Animals,Silly Doner Animal,0,7,6,320,94,3,0,0,1
+500,Decorations,Electronic Goldfish Bowl,30,6,1,0,0,1,0,1,0
+501,Decorations,USB Rocket Launcher,30,6,1,0,0,1,0,1,0
+502,Decorations,Solar Powered Lamp,60,8,2,0,0,2,0,1,0
+503,Decorations,R2D2 Trash Can,120,10,3,0,0,2,0,1,0
+504,Decorations,Quadcopter Drone,240,12,4,0,0,2,0,1,0
+505,Decorations,Helicopter Landing Zone,5000,40,8,0,0,10,0,1,0
+506,Decorations,Space Ship Landing Zone,10000,60,12,0,0,15,0,1,0
+550,Decorations,Pink Blinking Plastic Heart,0,5,4,0,0,1,0,0,1
+551,Decorations,Hot Dog Telephone,0,5,8,0,0,1,0,0,1
+552,Decorations,RC Solar System,0,5,10,0,0,1,0,0,1
+600,Extensions,Farm Size 30,800,0,1,0,0,30,0,1,0
+601,Extensions,Farm Size 45,1600,0,1,0,0,45,0,1,0
+602,Extensions,Farm Size 68,3200,0,1,0,0,68,0,1,0
+603,Extensions,Farm Size 102,6400,0,1,0,0,102,0,1,0
+604,Extensions,Farm Size 154,12800,0,1,0,0,154,0,1,0
+605,Extensions,Farm Size 230,25600,0,1,0,0,230,0,1,0
+700,Robots,Robot R4,4000,20,4,0,0,2,4,1,0
+701,Robots,Robot R8,8000,24,8,0,0,2,8,1,0
+702,Robots,Robot R16,16000,28,12,0,0,3,16,1,0
+703,Robots,Robot R32,32000,32,16,0,0,3,32,1,0

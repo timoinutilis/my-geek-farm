@@ -8,6 +8,7 @@ package gameDef
 		public static const CAT_ANIMALS:String = "Animals";
 		public static const CAT_DECORATIONS:String = "Decorations";
 		public static const CAT_EXTENSIONS:String = "Extensions";
+		public static const CAT_ROBOTS:String = "Robots";
 		
 		private var _id:int;
 		private var _category:String;
@@ -18,6 +19,7 @@ package gameDef
 		private var _collect:int;
 		private var _time:int;
 		private var _size:int;
+		private var _data:int;
 		private var _shop:Boolean;
 		private var _gift:Boolean;
 		
@@ -32,6 +34,7 @@ package gameDef
 			_collect = int(object.collect);
 			_time = int(object.time);
 			_size = int(object.size);
+			_data = int(object.data);
 			_shop = Boolean(int(object.shop));
 			_gift = Boolean(int(object.gift));
 		}
@@ -84,6 +87,11 @@ package gameDef
 		public function get size():int
 		{
 			return _size;
+		}
+
+		public function get data():int
+		{
+			return _data;
 		}
 
 		public function get shop():Boolean

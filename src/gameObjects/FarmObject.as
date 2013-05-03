@@ -1,8 +1,9 @@
 package gameObjects
 {
+	import game.MyGeekFarm;
+	
 	import gameDef.ItemDef;
 	import gameDef.ItemsManager;
-	import game.MyGeekFarm;
 
 	public class FarmObject
 	{
@@ -21,6 +22,8 @@ package gameObjects
 		public var itemId:int;
 		public var state:int;
 		public var timestamp:int;
+		public var name:String;
+		public var text:String;
 		
 		public static function create(object:Object):FarmObject
 		{
@@ -28,6 +31,8 @@ package gameObjects
 			farmObject.itemId = object.iid;
 			farmObject.state = object.st;
 			farmObject.timestamp = object.ts;
+			farmObject.name = object.na;
+			farmObject.text = object.tx;
 			return farmObject;
 		}
 		
@@ -44,6 +49,14 @@ package gameObjects
 				st: state,
 				ts: timestamp
 			};
+			if (name != null)
+			{
+				object.na = name;
+			}
+			if (text != null)
+			{
+				object.tx = text;
+			}
 			return object;
 		}
 		
@@ -55,6 +68,16 @@ package gameObjects
 		public function get itemDef():ItemDef
 		{
 			return MyGeekFarm.itemsManager.getItem(itemId);
+		}
+		
+		public function get fullName():String
+		{
+			var fullName:String = itemDef.name;
+			if (name != null)
+			{
+				fullName += " \"" + name + "\"";
+			}
+			return fullName;
 		}
 		
 		public function print():void
@@ -88,7 +111,7 @@ package gameObjects
 					break;
 			}
 			
-			MyGeekFarm.console.printTableLn(["[" + id + "]", itemDef.name, stateStr], [0, 6, 40]);
+			MyGeekFarm.console.printTableLn(["[" + id + "]", fullName, stateStr], [0, 6, 40]);
 		}
 
 		public function update():void
@@ -118,7 +141,13 @@ package gameObjects
 		public function init(def:ItemDef):void
 		{
 			itemId = def.id;
-			if (def.category == ItemDef.CAT_DECORATIONS)
+			if (def.category == ItemDef.CAT_ROBOTS)
+			{
+				state = STATE_BEING_THERE;
+				timestamp = 0;
+				name = "Unnamed";
+			}
+			else if (def.category == ItemDef.CAT_DECORATIONS)
 			{
 				state = STATE_BEING_THERE;
 				timestamp = 0;

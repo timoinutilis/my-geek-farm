@@ -11,11 +11,11 @@ package game
 	import gameDef.ItemsManager;
 	
 	import gameObjects.FarmObject;
+	import gameObjects.Player;
 	
 	import server.RequestNeighborsService;
 	import server.RequestPlayerService;
 	import server.SendPlayerService;
-	import gameObjects.Player;
 	
 
 	public class Interpreter
@@ -43,7 +43,7 @@ package game
 			initCommands();
 		}
 		
-		public function execute(line:String):void
+		public function execute(line:String, isScripted:Boolean = false):void
 		{
 			var cmdResult:int = OK;
 			var parts:Array = line.split(" ");
@@ -51,13 +51,17 @@ package game
 			var command:CommandInfo = _commandsByName[commandName];
 			if (command != null)
 			{
-				if (parts.length > 1 && (parts[1] as String).toLowerCase() == "h")
+				if (isScripted && !command.allowedInScript)
+				{
+					println("Command not allowed in script!");
+				}
+				else if (parts.length > 1 && (parts[1] as String).toLowerCase() == "h")
 				{
 					if (command.params != null)
 					{
 						println(command.name + " " + command.params);
 					}
-					println(command.help);
+					printwr(command.help);
 				}
 				else
 				{
@@ -74,7 +78,7 @@ package game
 				println("Unknown command. Enter \"help\" to see all commands!");
 			}
 			
-			if (cmdResult != WAIT)
+			if (!isScripted && cmdResult != WAIT)
 			{
 				onFinishExecute();
 			}
@@ -92,7 +96,7 @@ package game
 				var restMatch:String = null;
 				if (cmdName == "shop")
 				{
-					restMatch = findMatch(rest, [ItemDef.CAT_ANIMALS, ItemDef.CAT_DECORATIONS, ItemDef.CAT_EXTENSIONS, ItemDef.CAT_SEEDS, ItemDef.CAT_TREES]);
+					restMatch = findMatch(rest, [ItemDef.CAT_ANIMALS, ItemDef.CAT_DECORATIONS, ItemDef.CAT_EXTENSIONS, ItemDef.CAT_SEEDS, ItemDef.CAT_TREES, ItemDef.CAT_ROBOTS]);
 				}
 				else if (cmdName == "plow")
 				{
@@ -144,26 +148,31 @@ package game
 			addCommand("plow", "<plotID>/new", "Plow existing or new plot.", cmdPlow);
 			addCommand("collect", "<ID>", "Harvest plot or collect from item.", cmdCollect);
 			addCommand("fullscreen", null, "Toggle between full screen and window.", cmdFullscreen);
-			addCommand("neighbors", null, "Show your neighbors.", cmdNeighbors);
-			addCommand("visit", "<neighborID>", "Show all items on farm of neighbor.", cmdVisit);
-			addCommand("save", null, "Save current game. Anyway game is auto-saving every 10 seconds.", cmdSave);
+			addCommand("neighbors", null, "Show your neighbors.", cmdNeighbors, false);
+			addCommand("visit", "<neighborID>", "Show all items on farm of neighbor.", cmdVisit, false);
+			addCommand("save", null, "Save current game. Anyway game is auto-saving every 10 seconds.", cmdSave, false);
 			addCommand("remove", "<ID>", "Remove item from farm.", cmdRemove);
-			addCommand("invite", null, "Invite friends.", cmdInvite);
+			addCommand("invite", null, "Invite friends.", cmdInvite, false);
 			addCommand("clear", null, "Clears the screen.", cmdClear);
 			addCommand("tutorial", null, "Show an introduction of how to play the game.", cmdTutorial);
-			addCommand("photo", null, "Publish a screenshot in Facebook.", cmdPhoto);
+			addCommand("photo", null, "Publish a screenshot in Facebook.", cmdPhoto, false);
 			addCommand("gifts", null, "Show all items you can send as gifts for free.", cmdGifts);
-			addCommand("sendgift", "<itemID>", "Send item from gifts to neighbors for free.", cmdSendGift);
+			addCommand("sendgift", "<itemID>", "Send item from gifts to neighbors for free.", cmdSendGift, false);
 			addCommand("storage", null, "Show all items in your storage. Use \"take\" command to get something from there.", cmdStorage);
 			addCommand("take", "<storageItemID> (<plotID>)", "Take item from storage to farm. If it's a seed, put it on plot.", cmdTake);
+			
+			addCommand("robot.program", "<robotID> <comma separated commands...>", "Store given command calls (with parameters) in the robot. Example: \"robot.program 5 collect 1, collect 2, plow 1, plow 2\"", cmdRobotProgram, false);
+			addCommand("robot.run", "<robotID>", "Execute all stored commands of the robot.", cmdRobotRun, false);
+			addCommand("robot.show", "<robotID>", "Show stored commands of the robot.", cmdRobotShow);
+			addCommand("robot.name", "<robotID> <name>", "Change the name of the robot.", cmdRobotName);
 //			addCommand("xp", "<xp>", "Give XP", cmdXP);
 			
 			_commands.sortOn("name");
 		}
 		
-		private function addCommand(name:String, params:String, help:String, cmdFunc:Function):void
+		private function addCommand(name:String, params:String, help:String, cmdFunc:Function, allowedInScript:Boolean = true):void
 		{
-			var cmd:CommandInfo = new CommandInfo(name, params, help, cmdFunc);
+			var cmd:CommandInfo = new CommandInfo(name, params, help, cmdFunc, allowedInScript);
 			_commands.push(cmd);
 			_commandsByName[name] = cmd;
 		}
@@ -188,6 +197,11 @@ package game
 			MyGeekFarm.console.printTableLn(cells, positions);
 		}
 		
+		private function getString(parts:Array, index:int):String
+		{
+			return (parts.length > index) ? (parts[index] as String) : null;
+		}
+
 		private function getLowerString(parts:Array, index:int):String
 		{
 			return (parts.length > index) ? (parts[index] as String).toLowerCase() : null;
@@ -447,6 +461,7 @@ package game
 			if (def.price > MyGeekFarm.player.coins)
 			{
 				println("Not enough coins!");
+				return OK;
 			}
 			else if (param == "new")
 			{
@@ -833,6 +848,137 @@ package game
 						object.init(def);
 						onPlayerChange();
 					}
+					return OK;
+				}
+			}
+			return INCORRECT;
+		}
+		
+		private function cmdRobotProgram(parts:Array):int
+		{
+			var id:int = getInt(parts, 1);
+			
+			if (id < 0)
+			{
+				println("Missing ID!");
+			}
+			else
+			{
+				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
+				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				{
+					println("Not a robot!");
+				}
+				else
+				{
+					var macro:String = parts.slice(2).join(" ");
+					var commands:Array = macro.split(",");
+					if (commands.length > object.itemDef.data)
+					{
+						println("Error: " + object.itemDef.name + " can only store up to " + object.itemDef.data + " commands!");
+					}
+					else
+					{
+						object.text = macro;
+						println("Program stored by " + object.fullName + " (" + commands.length + " commands).");
+						onPlayerChange();
+					}
+				}
+				return OK;
+			}
+			return INCORRECT;
+		}
+		
+		private function cmdRobotRun(parts:Array):int
+		{
+			var id:int = getInt(parts, 1);
+			
+			if (id < 0)
+			{
+				println("Missing ID!");
+			}
+			else
+			{
+				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
+				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				{
+					println("Not a robot!");
+				}
+				else if (object.text == null || object.text.length == 0)
+				{
+					println("Robot is not programmed yet!");
+				}
+				else
+				{
+					var lines:Array = object.text.split(",");
+					var trim:RegExp = /^\s+|\s+$/g;
+					for each (var line:String in lines)
+					{
+						line = line.replace(trim, "");
+						println("=>" + line);
+						execute(line, true);
+					}
+				}
+				return OK;
+			}
+			return INCORRECT;
+		}
+		
+		private function cmdRobotShow(parts:Array):int
+		{
+			var id:int = getInt(parts, 1);
+			
+			if (id < 0)
+			{
+				println("Missing ID!");
+			}
+			else
+			{
+				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
+				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				{
+					println("Not a robot!");
+				}
+				else if (object.text == null || object.text.length == 0)
+				{
+					println("Robot is not programmed yet!");
+				}
+				else
+				{
+					printwr(object.text);
+				}
+				return OK;
+			}
+			return INCORRECT;
+		}
+
+		private function cmdRobotName(parts:Array):int
+		{
+			var id:int = getInt(parts, 1);
+			var name:String = getString(parts, 2);
+			
+			if (id < 0)
+			{
+				println("Missing ID!");
+			}
+			else
+			{
+				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
+				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				{
+					println("Not a robot!");
+					return OK;
+				}
+				else if (name == null || name.length == 0)
+				{
+					println("Missing name!");
+				}
+				else
+				{
+					var completeName:String = parts.slice(2).join(" ");
+					object.name = completeName.substr(0, 20);
+					object.print();
+					onPlayerChange();
 					return OK;
 				}
 			}
