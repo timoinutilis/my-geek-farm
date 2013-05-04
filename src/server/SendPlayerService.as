@@ -14,9 +14,9 @@ package server
 			_variables.xp = player.xp;
 			_variables.coins = player.coins;
 			_variables.farm_size = player.farmSize;
-			_variables.objects = JSON.stringify(player.farmToObjects());
-			_variables.stored_objects = JSON.stringify(player.storedObjects);
-			_variables.gift_receivers = JSON.stringify(player.giftReceivers);
+			_variables.objects = stringifyJSON(player.farmToObjects());
+			_variables.stored_objects = stringifyJSON(player.storedObjects);
+			_variables.gift_receivers = stringifyJSON(player.giftReceivers);
 		}
 	}
 }

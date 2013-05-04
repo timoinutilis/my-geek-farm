@@ -30,7 +30,7 @@ package server
 					player.xp = int(data.xp);
 					player.coins = int(data.coins);
 					player.farmSize = int(data.farm_size);
-					player.loadFarm(JSON.parse(data.objects) as Array);
+					player.loadFarm(parseJSON(data.objects) as Array);
 				}
 			}
 		}

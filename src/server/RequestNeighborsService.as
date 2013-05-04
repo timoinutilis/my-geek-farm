@@ -1,7 +1,5 @@
 package server
 {
-	import com.adobe.serialization.json.JSON;
-	
 	import gameObjects.Player;
 
 	public class RequestNeighborsService extends RequestService

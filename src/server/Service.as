@@ -1,5 +1,7 @@
 package server
 {
+	import com.adobe.serialization.json.JSON;
+	
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -55,7 +57,7 @@ package server
 			removeListeners();
 			
 			var jsonData:String = _loader.data as String;
-			var data:* = JSON.parse(jsonData);
+			var data:* = parseJSON(jsonData);
 			_isOk = data.isOk as Boolean;
 			_error = data.error as String;
 			_serverTime = data.serverTime as int;
@@ -92,6 +94,16 @@ package server
 		public function get serverTime():int
 		{
 			return _serverTime;
+		}
+		
+		public static function parseJSON(s:String):*
+		{
+			return com.adobe.serialization.json.JSON.decode(s);
+		}
+		
+		public static function stringifyJSON(o:Object):String
+		{
+			return com.adobe.serialization.json.JSON.encode(o);
 		}
 
 	}

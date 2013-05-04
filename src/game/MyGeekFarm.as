@@ -17,6 +17,7 @@ package game
 	
 	import server.LoginService;
 	import server.SendPlayerService;
+	import server.Service;
 	
 	
 	[SWF(width = "640", height = "480", frameRate = "30")]
@@ -78,7 +79,7 @@ package game
 			console.println("/    Y    \\___  \\    \\_\\  \\  ___/\\  ___/|    < |     \\   / __ \\|  | \\/  Y Y  \\");
 			console.println("\\____|__  / ____|\\______  /\\___  >\\___  >__|_ \\\\___  /  (____  /__|  |__|_|  /");
 			console.println("        \\/\\/            \\/     \\/     \\/     \\/    \\/        \\/            \\/ ");
-			console.println("Hello at MyGeekFarm v2.0 by Inutilis Software!");
+			console.println("Hello at MyGeekFarm v2.0.1 by Inutilis Software!");
 			console.println("");
 			console.print("Logging in... ");
 			var service:LoginService = new LoginService(fbUid, player, onLogin);
@@ -126,7 +127,7 @@ package game
 						batch.push({"method":"GET", "relative_url":req});
 						batch.push({"method":"DELETE", "relative_url":req});
 					}
-					Facebook.api("/", onFbRequestHandled, {batch: JSON.stringify(batch)}, "POST");
+					Facebook.api("/", onFbRequestHandled, {batch: Service.stringifyJSON(batch)}, "POST");
 				}
 				else
 				{
@@ -160,10 +161,10 @@ package game
 						else
 						{
 							// data from request
-							var request:Object = JSON.parse(body);
+							var request:Object = Service.parseJSON(body);
 							if (request.hasOwnProperty("data"))
 							{
-								var giftData:Object = JSON.parse(request.data);
+								var giftData:Object = Service.parseJSON(request.data);
 								gifts.push(giftData);
 							}
 						}

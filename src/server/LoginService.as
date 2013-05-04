@@ -33,9 +33,9 @@ package server
 				_player.xp = int(result.xp);
 				_player.coins = int(result.coins);
 				_player.farmSize = int(result.farm_size);
-				_player.loadFarm(JSON.parse(result.objects) as Array);
-				_player.loadStorage(result.stored_objects ? JSON.parse(result.stored_objects) as Object : {});
-				_player.loadGiftReceivers(result.gift_receivers ? JSON.parse(result.gift_receivers) as Object : {});
+				_player.loadFarm(parseJSON(result.objects) as Array);
+				_player.loadStorage(result.stored_objects ? parseJSON(result.stored_objects) as Object : {});
+				_player.loadGiftReceivers(result.gift_receivers ? parseJSON(result.gift_receivers) as Object : {});
 			}
 			else
 			{
