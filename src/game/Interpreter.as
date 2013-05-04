@@ -22,6 +22,8 @@ package game
 	{
 		[Embed(source="tutorial.txt", mimeType="application/octet-stream")]
 		private const TutorialText:Class;
+		
+		public static const AUTO_SAVE_SECONDS:int = 5;
 
 		private static const OK:int = 0;
 		private static const INCORRECT:int = 1;
@@ -37,7 +39,7 @@ package game
 		
 		public function Interpreter()
 		{
-			_autoSaveTimer = new Timer(10000, 1);
+			_autoSaveTimer = new Timer(AUTO_SAVE_SECONDS * 1000, 1);
 			_autoSaveTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onAutoSaveTimer);
 			
 			initCommands();
@@ -150,7 +152,7 @@ package game
 			addCommand("fullscreen", null, "Toggle between full screen and window.", cmdFullscreen);
 			addCommand("neighbors", null, "Show your neighbors.", cmdNeighbors, false);
 			addCommand("visit", "<neighborID>", "Show all items on farm of neighbor.", cmdVisit, false);
-			addCommand("save", null, "Save current game. Anyway game is auto-saving every 10 seconds.", cmdSave, false);
+			addCommand("save", null, "Save current game. Anyway game is auto-saving every " + AUTO_SAVE_SECONDS + " seconds.", cmdSave, false);
 			addCommand("remove", "<ID>", "Remove item from farm.", cmdRemove);
 			addCommand("invite", null, "Invite friends.", cmdInvite, false);
 			addCommand("clear", null, "Clears the screen.", cmdClear);
