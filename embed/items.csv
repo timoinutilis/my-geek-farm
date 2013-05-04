@@ -54,7 +54,7 @@ id,category,name,price,xp,level,collect,time,size,data,shop,gift
 603,Extensions,Farm Size 102,6400,0,1,0,0,102,0,1,0
 604,Extensions,Farm Size 154,12800,0,1,0,0,154,0,1,0
 605,Extensions,Farm Size 230,25600,0,1,0,0,230,0,1,0
-700,Robots,Robot R4,4000,20,4,0,0,2,4,1,0
-701,Robots,Robot R8,8000,24,8,0,0,2,8,1,0
-702,Robots,Robot R16,16000,28,12,0,0,3,16,1,0
-703,Robots,Robot R32,32000,32,16,0,0,3,32,1,0
+700,Robots,Robot R8,4000,20,8,0,0,2,8,1,0
+701,Robots,Robot R16,8000,24,12,0,0,2,16,1,0
+702,Robots,Robot R32,16000,28,16,0,0,3,32,1,0
+703,Robots,Robot R64,32000,32,20,0,0,3,64,1,0
