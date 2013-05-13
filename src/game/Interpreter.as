@@ -633,6 +633,7 @@ package game
 			else
 			{
 				print("Getting permission... ");
+				MyGeekFarm.exitFullscreen();
 				Facebook.ui("permissions.request", {"perms":"publish_actions"}, onPermissions);
 			}
 			return WAIT;
@@ -867,9 +868,14 @@ package game
 			else
 			{
 				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
-				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				if (object == null)
+				{
+					println("Unknown ID!");
+				}
+				else if (object.itemDef.category != ItemDef.CAT_ROBOTS)
 				{
 					println("Not a robot!");
+					return OK;
 				}
 				else
 				{
@@ -885,8 +891,8 @@ package game
 						println("Program stored by " + object.fullName + " (" + commands.length + " commands).");
 						onPlayerChange();
 					}
+					return OK;
 				}
-				return OK;
 			}
 			return INCORRECT;
 		}
@@ -902,13 +908,19 @@ package game
 			else
 			{
 				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
-				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				if (object == null)
+				{
+					println("Unknown ID!");
+				}
+				else if (object.itemDef.category != ItemDef.CAT_ROBOTS)
 				{
 					println("Not a robot!");
+					return OK;
 				}
 				else if (object.text == null || object.text.length == 0)
 				{
 					println("Robot is not programmed yet!");
+					return OK;
 				}
 				else
 				{
@@ -920,8 +932,8 @@ package game
 						println("=>" + line);
 						execute(line, true);
 					}
+					return OK;
 				}
-				return OK;
 			}
 			return INCORRECT;
 		}
@@ -937,19 +949,25 @@ package game
 			else
 			{
 				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
-				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				if (object == null)
+				{
+					println("Unknown ID!");
+				}
+				else if (object.itemDef.category != ItemDef.CAT_ROBOTS)
 				{
 					println("Not a robot!");
+					return OK;
 				}
 				else if (object.text == null || object.text.length == 0)
 				{
 					println("Robot is not programmed yet!");
+					return OK;
 				}
 				else
 				{
 					printwr(object.text);
+					return OK;
 				}
-				return OK;
 			}
 			return INCORRECT;
 		}
@@ -966,7 +984,11 @@ package game
 			else
 			{
 				var object:FarmObject = MyGeekFarm.player.getFarmObject(id);
-				if (object.itemDef.category != ItemDef.CAT_ROBOTS)
+				if (object == null)
+				{
+					println("Unknown ID!");
+				}
+				else if (object.itemDef.category != ItemDef.CAT_ROBOTS)
 				{
 					println("Not a robot!");
 					return OK;

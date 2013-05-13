@@ -79,7 +79,7 @@ package game
 			console.println("/    Y    \\___  \\    \\_\\  \\  ___/\\  ___/|    < |     \\   / __ \\|  | \\/  Y Y  \\");
 			console.println("\\____|__  / ____|\\______  /\\___  >\\___  >__|_ \\\\___  /  (____  /__|  |__|_|  /");
 			console.println("        \\/\\/            \\/     \\/     \\/     \\/    \\/        \\/            \\/ ");
-			console.println("Hello at MyGeekFarm v2.0.2 by Inutilis Software!");
+			console.println("Hello at MyGeekFarm v2.0.3 by Inutilis Software!");
 			console.println("");
 			console.print("Logging in... ");
 			var service:LoginService = new LoginService(fbUid, player, onLogin);
