@@ -1,12 +1,14 @@
 package gameObjects
 {
+	import game.MyGeekFarm;
+	
 	import gameDef.ItemDef;
 	import gameDef.ItemsManager;
-	
-	import game.MyGeekFarm;
 
 	public class Player
 	{
+		public static const SORT_COLUMNS:Array = ["category", "id", "name", "state"];
+
 		public var fbUid:String;
 		public var playerId:int;
 		public var name:String;
@@ -15,7 +17,7 @@ package gameObjects
 		public var coins:int = 20;
 		public var farmSize:int = 20;
 		
-		private var _objects:Array = [];
+		private var _objects:Vector.<FarmObject> = new <FarmObject>[];
 		private var _objectsById:Object = {};
 		private var _nextFreeId:int = 1;
 		private var _farmLoaded:Boolean;
@@ -52,7 +54,7 @@ package gameObjects
 			return objects;
 		}
 		
-		public function get farmObjects():Array
+		public function get farmObjects():Vector.<FarmObject>
 		{
 			return _objects;
 		}
@@ -91,6 +93,54 @@ package gameObjects
 			obj.state = FarmObject.STATE_GROWING;
 			obj.timestamp = MyGeekFarm.currentTime - obj.itemDef.timeSeconds;
 			addFarmObject(obj);
+		}
+		
+		public function sortFarm(column:String):void
+		{
+			if (column == "category")
+			{
+				_objects.sort(function(a:FarmObject, b:FarmObject):int {
+					if (a.itemDef.category == b.itemDef.category)
+					{
+						return a.id - b.id;
+					}
+					return ItemDef.CAT_SORT_ORDER.indexOf(a.itemDef.category) - ItemDef.CAT_SORT_ORDER.indexOf(b.itemDef.category);
+				});
+			}
+			if (column == "id")
+			{
+				_objects.sort(function(a:FarmObject, b:FarmObject):int {
+					return a.id - b.id;
+				});
+			}
+			if (column == "name")
+			{
+				_objects.sort(function(a:FarmObject, b:FarmObject):int {
+					if (a.itemDef.name < b.itemDef.name)
+					{
+						return -1;
+					}
+					if (a.itemDef.name > b.itemDef.name)
+					{
+						return 1;
+					}
+					return a.id - b.id;
+				});
+			}
+			if (column == "state")
+			{
+				_objects.sort(function(a:FarmObject, b:FarmObject):int {
+					if (a.state == b.state)
+					{
+						if (a.state == FarmObject.STATE_GROWING)
+						{
+							return a.remainingTime - b.remainingTime;
+						}
+						return a.id - b.id;
+					}
+					return FarmObject.STATE_SORT_ORDER.indexOf(a.state) - FarmObject.STATE_SORT_ORDER.indexOf(b.state);
+				});
+			}
 		}
 		
 		// STORAGE

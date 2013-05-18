@@ -10,6 +10,8 @@ package gameDef
 		public static const CAT_EXTENSIONS:String = "Extensions";
 		public static const CAT_ROBOTS:String = "Robots";
 		
+		public static const CAT_SORT_ORDER:Array = [CAT_SEEDS, CAT_TREES, CAT_ANIMALS, CAT_DECORATIONS, CAT_ROBOTS];
+		
 		private var _id:int;
 		private var _category:String;
 		private var _name:String;

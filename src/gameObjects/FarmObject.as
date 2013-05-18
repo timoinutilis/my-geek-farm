@@ -15,6 +15,8 @@ package gameObjects
 		public static const STATE_KILLED:int = 5;
 		public static const STATE_BEING_THERE:int = 6;
 		
+		public static const STATE_SORT_ORDER:Array = [STATE_READY, STATE_WITHERED, STATE_PLOWED, STATE_UNPLOWED, STATE_GROWING, STATE_BEING_THERE, STATE_KILLED];
+		
 		public static const MIN_WITHER_HOURS:int = 48;
 		
 		private var _id:int;
@@ -80,6 +82,13 @@ package gameObjects
 			return fullName;
 		}
 		
+		public function get remainingTime():int
+		{
+			var growTime:int = itemDef.timeSeconds;
+			var passedTime:int = MyGeekFarm.currentTime - timestamp;
+			return growTime - passedTime;
+		}
+		
 		public function print():void
 		{
 			var stateStr:String;
@@ -93,9 +102,7 @@ package gameObjects
 					stateStr = "Unplowed";
 					break;
 				case STATE_GROWING:
-					var growTime:int = itemDef.timeSeconds;
-					var passedTime:int = MyGeekFarm.currentTime - timestamp;
-					stateStr = "Growing (" + MyGeekFarm.timeString(growTime - passedTime) + ")";
+					stateStr = "Growing (" + MyGeekFarm.timeString(remainingTime) + ")";
 					break;
 				case STATE_READY:
 					stateStr = "Ready";

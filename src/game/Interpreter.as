@@ -28,7 +28,7 @@ package game
 		private static const OK:int = 0;
 		private static const INCORRECT:int = 1;
 		private static const WAIT:int = 2;
-
+		
 		public var onFinishExecute:Function;
 		
 		private var _commandsByName:Object;
@@ -104,6 +104,10 @@ package game
 				{
 					restMatch = findMatch(rest, ["new"]);
 				}
+				else if (cmdName == "sort")
+				{
+					restMatch = findMatch(rest, Player.SORT_COLUMNS);
+				}
 				if (restMatch != null)
 				{
 					bestMatch = cmdName + " " + restMatch;
@@ -162,11 +166,11 @@ package game
 			addCommand("sendgift", "<itemID>", "Send item from gifts to neighbors for free.", cmdSendGift, false);
 			addCommand("storage", null, "Show all items in your storage. Use \"take\" command to get something from there.", cmdStorage);
 			addCommand("take", "<storageItemID> (<plotID>)", "Take item from storage to farm. If it's a seed, put it on plot.", cmdTake);
-			
 			addCommand("robot.program", "<robotID> <comma separated commands...>", "Store given command calls (with parameters) in the robot. Example: \"robot.program 5 collect 1, collect 2, plow 1, plow 2\"", cmdRobotProgram, false);
 			addCommand("robot.run", "<robotID>", "Execute all stored commands of the robot.", cmdRobotRun, false);
 			addCommand("robot.show", "<robotID>", "Show stored commands of the robot.", cmdRobotShow);
 			addCommand("robot.name", "<robotID> <name>", "Change the name of the robot.", cmdRobotName);
+			addCommand("sort", Player.SORT_COLUMNS.join("/"), "Sort the items of the farm by the given column. If sorted by state, all growing items will be sorted by time, too.", cmdSort);
 //			addCommand("xp", "<xp>", "Give XP", cmdXP);
 			
 			_commands.sortOn("name");
@@ -1005,6 +1009,27 @@ package game
 					onPlayerChange();
 					return OK;
 				}
+			}
+			return INCORRECT;
+		}
+		
+		private function cmdSort(parts:Array):int
+		{
+			var column:String = getLowerString(parts, 1);
+			if (column == null)
+			{
+				println("Missing sort parameter!");
+			}
+			else if (Player.SORT_COLUMNS.indexOf(column) == -1)
+			{
+				println("Invalid sort parameter!");
+			}
+			else
+			{
+				MyGeekFarm.player.sortFarm(column);
+				MyGeekFarm.player.printFarm();
+				onPlayerChange();
+				return OK;
 			}
 			return INCORRECT;
 		}
