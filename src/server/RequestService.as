@@ -11,7 +11,7 @@ package server
 		
 		override protected function get serviceUrl():String
 		{
-			return "http://api.inutilis.de/farm/request.php";
+			return "http://apps.timokloss.com/mygeekfarm/backend/request.php";
 		}
 
 	}
