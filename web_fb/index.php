@@ -164,7 +164,7 @@ else
 		
 		<td>
 		<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2FMyGeekFarm&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=25&amp;appId=<?php echo $appId; ?>" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:25px;" allowTransparency="true"></iframe>
-		<span><a href="//www.facebook.com/MyGeekFarm" target="_top">MyGeekFarm news and feedback</a> <a href="http://www.inutilis.de" target="_top"><img src="inutilis.png" /></a></span>
+		<span><a href="//www.facebook.com/MyGeekFarm" target="_top">MyGeekFarm news and feedback</a> <a href="http://www.inutilis.com" target="_top"><img src="inutilis.png" /></a></span>
         </td>
         
         </tr>
@@ -181,13 +181,6 @@ else
 
         </td>
         
-        <td id="sideBar">
-        <!-- maudau code begin -->
-		<script id="maudauScript" src="//cdn.maudau.com/AdsBar/js/maudau.promobox.loader.1_0.js"></script><script>MauDau.init(4491,1);</script>
-		<iframe id="maudauIframe" scrolling="no" height="100%" frameborder="0" width="118px" marginheight="0" marginwidth="0" src="//www.maudau.com/AdsBar/vertical?appid=4491&pid=1"></iframe>
-		<!-- maudau code end -->
-        </td>
-
         </tr>
         </table>
 
