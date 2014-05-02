@@ -79,7 +79,7 @@ package game
 			console.println("/    Y    \\___  \\    \\_\\  \\  ___/\\  ___/|    < |     \\   / __ \\|  | \\/  Y Y  \\");
 			console.println("\\____|__  / ____|\\______  /\\___  >\\___  >__|_ \\\\___  /  (____  /__|  |__|_|  /");
 			console.println("        \\/\\/            \\/     \\/     \\/     \\/    \\/        \\/            \\/ ");
-			console.println("Hello at MyGeekFarm v2.1.1 by Inutilis Software!");
+			console.println("Hello at MyGeekFarm v2.1.2 by Inutilis Software!");
 			console.println("");
 			console.print("Logging in... ");
 			var service:LoginService = new LoginService(fbUid, player, onLogin);
@@ -95,7 +95,7 @@ package game
 				_serverTimeDiff = service.serverTime - time;
 				if (player.name == null)
 				{
-					player.name = fbName;
+					player.name = convertName(fbName);
 				}
 				if (fbAppId != null)
 				{
@@ -111,6 +111,22 @@ package game
 			{
 				console.println("Error: " + service.error);
 			}
+		}
+		
+		private function convertName(name:String):String
+		{
+			name = name.toLowerCase().replace(/ /g, ".");
+			var cleanName:String = "";
+			for (var i:int = 0; i < name.length; i++)
+			{
+				var char:Number = name.charCodeAt(i);
+				if (char > 127)
+				{
+					char = 95; // underscore
+				}
+				cleanName += String.fromCharCode(char);
+			}
+			return cleanName;
 		}
 		
 		private function onFbInit(success:Object, fail:Object):void

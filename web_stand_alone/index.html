@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>MyGeekFarm</title>
+<meta charset="UTF-8">
+<style type="text/css" media="screen"> 
+    html, body  { height:100%; }
+    body { margin:0; padding:0; overflow:auto; text-align:center; 
+           background-color: #ffffff;
+           font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif; }   
+    object:focus { outline:none; }
+    
+    table {
+    	width: 100%;
+    	height: 100%;
+    	border-collapse: separate;
+		border-spacing: 5px;
+    }
+    table, tr, td {
+    	margin: 0;
+    	padding: 0;
+    }
+    #topBar {
+    	height: 25px;
+    }
+    #topBar td {
+    	text-align: left;
+    }
+    #topBar span {
+    	display: inline-block;
+    	float: right;
+    	font-size: 12px;
+    }
+    #topBar span a {
+    	text-decoration: none;
+    	color: black;
+    }
+    #topBar span a:hover {
+    	text-decoration: underline;
+    }
+    #topBar span img {
+    	margin-left: 20px;
+    	margin-top: 2px;
+    }
+    #sideBar {
+    	width: 118px;
+    }
+    #gameContainer {
+    	/*width: 100%;*/
+    	height: 100%;
+    }
+    #flashContent {
+    	visibility: hidden;
+    }
+</style>
+<script type="text/javascript" src="swfobject.js"></script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script>
+	// This is called with the results from from FB.getLoginStatus().
+	function statusChangeCallback(response)
+	{
+		// The response object is returned with a status field that lets the
+		// app know the current login status of the person.
+		// Full docs on the response object can be found in the documentation
+		// for FB.getLoginStatus().
+		if (response.status === 'connected')
+		{
+			// Logged into your app and Facebook.
+			requestUserData();
+		}
+		else if (response.status === 'not_authorized')
+		{
+			// The person is logged into Facebook, but not your app.
+			document.getElementById('status').innerHTML = 'Please log into this app.';
+		}
+		else
+		{
+			// The person is not logged into Facebook, so we're not sure if
+			// they are logged into this app or not.
+			document.getElementById('status').innerHTML = 'Please log into Facebook.';
+		}
+	}
+
+	// This function is called when someone finishes with the Login
+	// Button.  See the onlogin handler attached to it in the sample
+	// code below.
+	function checkLoginState()
+	{
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+
+	window.fbAsyncInit = function()
+	{
+		FB.init({
+			appId      : '506892022682269',
+			cookie     : true,  // enable cookies to allow the server to access the session
+			xfbml      : true,  // parse social plugins on this page
+			version    : 'v2.0' // use version 2.0
+		});
+
+		// Now that we've initialized the JavaScript SDK, we call 
+		// FB.getLoginStatus().  This function gets the state of the
+		// person visiting this page and can return one of three states to
+		// the callback you provide.  They can be:
+		//
+		// 1. Logged into your app ('connected')
+		// 2. Logged into Facebook, but not your app ('not_authorized')
+		// 3. Not logged into Facebook and can't tell if they are logged into
+		//    your app or not.
+		//
+		// These three cases are handled in the callback function.
+
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+
+	};
+
+	// Load the SDK asynchronously
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk/debug.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	} (document, 'script', 'facebook-jssdk'));
+
+	// See statusChangeCallback() for when this call is made.
+	function requestUserData()
+	{
+		window.flashvars = {};
+		FB.api('/me?fields=id,name,friends,permissions,apprequests', function(response) {
+			window.flashvars.fbuid = response.id;
+			window.flashvars.fbname = response.name;
+
+			var friendIds = [];
+			if (response.friends)
+			{
+				var friends = response.friends.data;
+				for (var i = 0; i < friends.length; i++)
+				{
+					friendIds.push(friends[i].id);
+				}
+			}
+			window.flashvars.fbfriends = friendIds.join(",");
+
+			var permissionsIds = [];
+			if (response.permissions)
+			{
+				var permissions = response.permissions.data;
+				for (var i = 0; i < permissions.length; i++)
+				{
+					permissionsIds.push(permissions[i].permission);
+				}
+			}
+			window.flashvars.fbpermissions = permissionsIds.join(",");
+
+			var requestIds = [];
+			if (response.apprequests)
+			{
+				var apprequests = response.apprequests.data;
+				for (var i = 0; i < apprequests.length; i++)
+				{
+					requestIds.push(apprequests[i].id);
+				}
+			}
+			window.flashvars.fbrequests = requestIds.join(",");
+
+			window.flashvars.fbappid = '506892022682269';
+
+			startGame();
+		});
+	}
+
+	function startGame()
+	{
+		var loginContent = document.getElementById('loginContent');
+		loginContent.parentNode.removeChild(loginContent);
+		
+		document.getElementById('flashContent').style.visibility = "visible";
+
+		// load game
+
+        var params = {};
+        params.quality = "high";
+        params.bgcolor = "#ffffff";
+		params.allowscriptaccess = "always";
+		params.allownetworking = "all";
+        params.allowfullscreen = "true";
+        params.allowfullscreeninteractive = "true";
+        
+        var attributes = {};
+        attributes.id = "MyGeekFarm";
+        attributes.name = "MyGeekFarm";
+        attributes.align = "middle";
+        
+        swfobject.embedSWF(
+            "MyGeekFarm_v2.1.2.swf", "flashContent", 
+            "100%", "100%", 
+            "10.2.0",
+            "expressInstall.swf", 
+            window.flashvars, params, attributes);
+	}
+</script>
+
+<table>
+<tr id="topBar">
+
+<td>
+<fb:like href="http://www.facebook.com/MyGeekFarm" layout="standard" action="like" show_faces="false" share="false"></fb:like>
+<span><a href="//www.facebook.com/MyGeekFarm">MyGeekFarm news and feedback</a> <a href="http://www.inutilis.com"><img src="inutilis.png" /></a></span>
+</td>
+
+</tr>
+
+<tr>
+<td id="gameContainer">
+
+<div id="loginContent">
+<p>
+<fb:login-button scope="public_profile" onlogin="checkLoginState();">
+</fb:login-button>
+</p>
+<p>
+	Please log into Facebook to play this game.
+</p>
+</div>
+
+<div id="flashContent">
+<p>
+To view this page ensure that Adobe Flash Player version 
+10.2.0 or greater is installed. 
+</p>
+</div>
+
+</td>
+
+</tr>
+</table>
+
+<div id="status">
+</div>
+
+</body>
+</html>
